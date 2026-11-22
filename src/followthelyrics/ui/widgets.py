@@ -4,6 +4,7 @@ import sys
 import time
 from importlib.resources import files
 from typing import TYPE_CHECKING
+from typing import TypeAlias
 
 from PyQt6.QtCore import QEasingCurve
 from PyQt6.QtCore import QPointF
@@ -139,7 +140,7 @@ def ease_out_back(t):
 
 
 if TYPE_CHECKING:
-    _HoverBase = QWidget
+    _HoverBase: TypeAlias = QWidget
 else:
     _HoverBase = object
 

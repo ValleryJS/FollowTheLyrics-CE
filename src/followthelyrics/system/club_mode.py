@@ -61,8 +61,9 @@ class ClubMode:
 
     def stop(self):
         with self.lock:
-            if self.running():
-                self.process.terminate()
+            process = self.process
+            if process is not None and process.poll() is None:
+                process.terminate()
             self.process = None
 
     def send(self, energy, bass, beat):
