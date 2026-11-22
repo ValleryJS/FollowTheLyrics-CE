@@ -18,11 +18,17 @@ Some of the changes in Cat's Edition include:
 - An add-on manager with a catalogue and manual ZIP installation.
 - Various bug fixes and quality-of-life changes.
 
+### Club Mode preview
+
+The packaged Windows and Linux builds include the Godot runtime needed for Club Mode. Open **Settings → General → Launch 3D nightclub** after starting FTL. When running from source, you can install [Godot 4](https://godotengine.org/download/) separately or set `FTL_GODOT_PATH` to its executable. Press **1**, **2** or **3** to switch cameras, and **F11** for fullscreen.
+
+This is an early prototype. Lighting and crowd movement respond to local audio data, but the scene still uses simple placeholder geometry.
+
 This isn't an exhaustive changelog. I'm still working on the fork, so features may change between releases.
 
 ## Downloads
 
-You can find my builds on the [Cat's Edition releases page](https://github.com/ValleryJS/FollowTheLyrics/releases).
+You can find my builds on the [Cat's Edition releases page](https://github.com/ValleryJS/FollowTheLyrics-CE/releases).
 
 If you'd rather use the official application, download it from [War3l's repository](https://github.com/War3l/FollowTheLyrics).
 

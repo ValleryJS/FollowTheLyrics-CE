@@ -98,7 +98,10 @@ jobs:
       - name: Ecrire la version
         run: printf '%s\n' "$VERSION" > src/followthelyrics/VERSION
       - name: Construire le programme
+        env:
+          FTL_BUNDLE_GODOT: "1"
         run: |
+          python tools/fetch_godot.py
           python tools/build.py
           test -f "${{ matrix.binary }}"
           mkdir -p release

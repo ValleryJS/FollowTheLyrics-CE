@@ -211,6 +211,9 @@ def main():
         f"{os.path.join(PACKAGE, 'assets', '*.png')}{os.pathsep}"
         f"{os.path.join('followthelyrics', 'assets')}",
         "--add-data",
+        f"{os.path.join(PACKAGE, 'assets', 'club')}{os.pathsep}"
+        f"{os.path.join('followthelyrics', 'assets', 'club')}",
+        "--add-data",
         f"{os.path.join(PACKAGE, 'fonts', '*.otf')}{os.pathsep}"
         f"{os.path.join('followthelyrics', 'fonts')}",
         "--add-data",
@@ -218,6 +221,13 @@ def main():
         f"{os.path.join('followthelyrics', 'fonts')}",
     ]
     cmd += windows_options(work) if WINDOWS else linux_options()
+    club_binary = os.path.join(
+        HERE, "vendor", "godot", "godot.exe" if WINDOWS else "godot"
+    )
+    if os.path.isfile(club_binary):
+        cmd += ["--add-binary", f"{club_binary}{os.pathsep}club_runtime"]
+    elif os.environ.get("FTL_BUNDLE_GODOT") == "1":
+        raise FileNotFoundError(f"Missing bundled Club Mode runtime: {club_binary}")
     for mod in EXCLUDED_MODULES:
         cmd += ["--exclude-module", mod]
     cmd.append(os.path.join(HERE, "tools", "pyinstaller_entry.py"))

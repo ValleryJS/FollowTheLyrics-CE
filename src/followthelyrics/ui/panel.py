@@ -1186,6 +1186,15 @@ class Panel(QWidget):
 
     def build_general(self):
         cards = []
+        club = Card("Club Mode (preview)")
+        self.club_button = QPushButton("Launch 3D nightclub")
+        self.club_button.clicked.connect(self.toggle_club)
+        club.add_row(
+            "3D music visualizer",
+            self.club_button,
+            "Change cameras with 1, 2, 3 and toggle fullscreen with F11.",
+        )
+        cards.append(club)
         discord = Card("Discord Rich Presence")
         self.discord_presence = widgets.Toggle()
         self.discord_presence.setChecked(bool(self.app.cfg.get("discord_presence", False)))
@@ -1412,6 +1421,18 @@ class Panel(QWidget):
         )
         if chosen.isValid():
             self.set("outline_color", chosen.name().upper())
+
+    def toggle_club(self):
+        if self.app.club.running():
+            self.app.club.stop()
+            self.club_button.setText("Launch 3D nightclub")
+        elif self.app.club.start():
+            self.club_button.setText("Close 3D nightclub")
+        else:
+            self.club_button.setText("Club renderer unavailable")
+            self.club_button.setToolTip(
+                "Use the packaged release, or install Godot 4 for source builds."
+            )
 
     def set(self, key, value):
         if self._building:

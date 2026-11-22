@@ -30,6 +30,7 @@ from followthelyrics.playback import audio
 from followthelyrics.playback import sites
 from followthelyrics.playback import worker
 from followthelyrics.system import crash_reporting
+from followthelyrics.system import club_mode
 from followthelyrics.system import discord_presence
 from followthelyrics.system import hotkeys
 from followthelyrics.system import install
@@ -57,6 +58,7 @@ class App:
         self.quitting = False
         self.cfg = settings.load_config()
         self.discord = discord_presence.DiscordPresence()
+        self.club = club_mode.ClubMode()
         self.discord.configure(self.cfg.get("discord_presence", False),
                                self.cfg.get("discord_client_id", ""))
         self.addons = AddonManager(settings.DATA_DIR)
@@ -103,7 +105,7 @@ class App:
         self.beat_bridge = worker.BeatBridge()
         self.beat_bridge.beat.connect(self.overlay.on_beat)
         self.audio = audio.AudioBeats(
-            self.desktop.audio, self.beat_bridge.beat.emit
+            self.desktop.audio, self.beat_bridge.beat.emit, self.club.send
         )
         self.audio.start()
 
@@ -701,6 +703,7 @@ class App:
 
     def cleanup(self):
         self.discord.shutdown()
+        self.club.shutdown()
         self.quitting = True
         self.addons.shutdown()
         self.tray.hide()

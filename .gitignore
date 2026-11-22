@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 build/
 dist/
+vendor/godot/
 cache/
 config.json
 profiles.json

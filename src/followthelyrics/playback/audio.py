@@ -48,9 +48,10 @@ def _silence():
 
 
 class AudioBeats:
-    def __init__(self, backend, on_beat):
+    def __init__(self, backend, on_beat, on_levels=None):
         self.backend = backend
         self.on_beat = on_beat
+        self.on_levels = on_levels
         self.enabled = backend is not None
         self.music_playing = False
         self.device_name = ""
@@ -133,6 +134,10 @@ class AudioBeats:
                     while buf.size >= BLOCK:
                         block, buf = buf[:BLOCK], buf[BLOCK:]
                         strength = detector.feed(block, now)
+                        if self.on_levels is not None:
+                            energy = min(1.0, float(np.sqrt(np.mean(block * block))) * 8.0)
+                            bass = min(1.0, detector.prev / 30.0)
+                            self.on_levels(energy, bass, strength)
                         if strength > 0:
                             try:
                                 self.on_beat(strength)

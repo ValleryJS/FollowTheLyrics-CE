@@ -39,7 +39,7 @@ version = { file = "src/followthelyrics/VERSION" }
 where = ["src"]
 
 [tool.setuptools.package-data]
-followthelyrics = ["VERSION", "fonts/*.otf", "fonts/*.txt", "assets/*.png"]
+followthelyrics = ["VERSION", "fonts/*.otf", "fonts/*.txt", "assets/*.png", "assets/club/*.gd", "assets/club/*.tscn", "assets/club/*.godot", "assets/club/*.txt"]
 
 [tool.ruff]
 line-length = 80
